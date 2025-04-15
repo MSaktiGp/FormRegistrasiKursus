@@ -49,13 +49,89 @@ namespace Registrasi
                 }
                 else
                 {
+                    listSkill += "," + valSkill;
+                }
+            }
+
+            int result = 0;
+            MySqlConnection connect = new MySqlConnection(conString);
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO peserta (nama,bahasa,hari,jk,skill,waktu) VALUES(@nama,@bahasaPemrograman,@hariKursus,@jenisKelamin,@skill,@waktu)");
+            cmd.Parameters.AddWithValue("@nama", nama);
+            cmd.Parameters.AddWithValue("@bahasaPemrograman", bahasaPemrograman);
+            cmd.Parameters.AddWithValue("@hariKursus", hariKursus);
+            cmd.Parameters.AddWithValue("@jenisKelamin", jenisKelamin);
+            cmd.Parameters.AddWithValue("@skill", listSkill);
+            cmd.Parameters.AddWithValue("@waktu", waktu);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = connect;
+
+
+            try
+            {
+                connect.Open();
+                result = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connect.State == ConnectionState.Open)
+                {
+                    connect.Close();
+                }
+            }
+            return result;
+        }
+
+        public int delete()
+        {
+            int result = 0;
+            MySqlConnection connect = new MySqlConnection(conString);
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM peserta WHERE id = @id");
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = connect;
+
+
+            try
+            {
+                connect.Open();
+                result = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connect.State == ConnectionState.Open)
+                {
+                    connect.Close();
+                }
+            }
+            return result;
+        }
+
+        public int update()
+        {
+            string listSkill = "";
+            foreach (string valSkill in this.skill)
+            {
+                if (listSkill == "")
+                {
+                    listSkill = valSkill;
+                }
+                else
+                {
                     listSkill += ", " + valSkill;
                 }
             }
 
             int result = 0;
             MySqlConnection connect = new MySqlConnection(conString);
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO peserta (id,nama,bahasa,hari,jk,skill,waktu) VALUES(@id,@nama,@bahasaPemrograman,@hariKursus,@jenisKelamin,@skill,@waktu)");
+            MySqlCommand cmd = new MySqlCommand("UPDATE peserta SET nama = @nama, bahasa = @bahasaPemrograman, hari = @hariKursus, jk = @jenisKelamin, skill = @skill, waktu = @waktu  WHERE id = @id");
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Parameters.AddWithValue("@nama", nama);
             cmd.Parameters.AddWithValue("@bahasaPemrograman", bahasaPemrograman);
@@ -85,6 +161,7 @@ namespace Registrasi
             }
             return result;
         }
+
         public static DataTable SelectAll()
         {
             DataTable dt = new DataTable();
@@ -113,5 +190,6 @@ namespace Registrasi
             }
             return dt;
         }
+
     }
 }

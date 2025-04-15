@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,7 @@ namespace Registrasi
             waktu = "";
             id = 0;
             nama = "";
+            loadData();
         }
 
         private void buttonDaftar_Click(object sender, EventArgs e)
@@ -50,7 +52,7 @@ namespace Registrasi
             {
                 richTextBoxHasil.AppendText(valSkill.ToString() + "\n");
             }
-            richTextBoxHasil.AppendText("Waktu kursus: " +  waktu + "\n");
+            richTextBoxHasil.AppendText("Waktu kursus: " + waktu + "\n");
             //menyimpan data ke db
             if (peserta.insert() != 0)
             {
@@ -152,6 +154,89 @@ namespace Registrasi
             dt = Peserta.SelectAll();
             dataGridViewPeserta.DataSource = dt;
             dataGridViewPeserta.Show();
+        }
+
+        private void dataGridViewPeserta_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridViewPeserta_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            clearForm();
+            int index = dataGridViewPeserta.CurrentRow.Index;
+            id = Convert.ToInt32(dataGridViewPeserta.Rows[index].Cells[0].Value);
+            nama = dataGridViewPeserta.Rows[index].Cells[1].Value.ToString();
+            bahasaPemrograman = dataGridViewPeserta.Rows[index].Cells[2].Value.ToString();
+            hariKursus = dataGridViewPeserta.Rows[index].Cells[3].Value.ToString();
+            jenisKelamin = dataGridViewPeserta.Rows[index].Cells[4].Value.ToString();
+            String skill = dataGridViewPeserta.Rows[index].Cells[5].Value.ToString();
+            waktu = dataGridViewPeserta.Rows[index].Cells[6].Value.ToString();
+
+            //convert string skill ke dalam bentuk skill collection
+            string[] listSkill = skill.Split(',');
+
+            labelId.Text = id.ToString();
+            textBoxNama.Text = nama;
+            comboBoxBahasaPemrograman.Text = bahasaPemrograman;
+
+            if (hariKursus == "Senin - Rabu") radioButtonH1.Checked = true;
+            else if (hariKursus == "Selasa - Kamis") radioButtonH2.Checked = true;
+            else if (hariKursus == "Sabtu - Minggu") radioButtonH3.Checked = true;
+
+            if (jenisKelamin == "Laki-laki") radioButtonLk.Checked = true;
+            else if (jenisKelamin == "Perempuan") radioButtonP.Checked = true;
+
+            for (int i = 1; i < listSkill.Length; i++)
+            {
+                this.skill.Add(listSkill[i]);
+                if (listSkill[i] == "Pemrograman Web") checkBoxWeb.Checked = true;
+                else if (listSkill[i] == "Pemrograman Mobile") checkBoxMobile.Checked = true;
+                else if (listSkill[i] == "Pemrograman Desktop") checkBoxDesktop.Checked = true;
+            }
+
+            if (waktu == listBoxWaktu.Items[0].ToString()) listBoxWaktu.SetSelected(0, true);
+            else if (waktu == listBoxWaktu.Items[1].ToString()) listBoxWaktu.SetSelected(1, true);
+            else if (waktu == listBoxWaktu.Items[2].ToString()) listBoxWaktu.SetSelected(2, true);
+            else if (waktu == listBoxWaktu.Items[3].ToString()) listBoxWaktu.SetSelected(3, true);
+
+
+            buttonHapus.Enabled = true;
+            buttonUpdate.Enabled = true;
+        }
+
+        private void clearForm()
+        {
+            textBoxNama.Text = "";
+            comboBoxBahasaPemrograman.Text = "";
+            radioButtonLk.Checked = false;
+            radioButtonP.Checked = false;
+            radioButtonH1.Checked = false;
+            radioButtonH2.Checked = false;
+            radioButtonH3.Checked = false;
+            checkBoxDesktop.Checked = false;
+            checkBoxMobile.Checked = false;
+            checkBoxWeb.Checked = false;
+            listBoxWaktu.ClearSelected();
+
+        }
+
+        private void buttonHapus_Click(object sender, EventArgs e)
+        {
+            //Menghapus data berdasarkan ID
+            Peserta peserta = new Peserta(id, nama, jenisKelamin, bahasaPemrograman, hariKursus, skill, waktu);
+            peserta.delete();
+            //baca data
+            loadData();
+        }
+
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+            //Mengupdate data berdasarkan ID
+            Peserta peserta = new Peserta(id, nama, jenisKelamin, bahasaPemrograman, hariKursus, skill, waktu);
+            peserta.update();
+            //baca data
+            loadData();
         }
     }
 }

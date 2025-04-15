@@ -51,6 +51,9 @@
             groupBoxHari = new GroupBox();
             groupBoxJK = new GroupBox();
             dataGridViewPeserta = new DataGridView();
+            labelId = new Label();
+            buttonHapus = new Button();
+            buttonUpdate = new Button();
             groupBoxHari.SuspendLayout();
             groupBoxJK.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPeserta).BeginInit();
@@ -291,12 +294,52 @@
             dataGridViewPeserta.Name = "dataGridViewPeserta";
             dataGridViewPeserta.Size = new Size(798, 275);
             dataGridViewPeserta.TabIndex = 23;
+            dataGridViewPeserta.CellClick += dataGridViewPeserta_CellClick;
+            dataGridViewPeserta.CellContentClick += dataGridViewPeserta_CellContentClick;
+            // 
+            // labelId
+            // 
+            labelId.AutoSize = true;
+            labelId.Location = new Point(25, 17);
+            labelId.Name = "labelId";
+            labelId.Size = new Size(0, 15);
+            labelId.TabIndex = 24;
+            labelId.Visible = false;
+            // 
+            // buttonHapus
+            // 
+            buttonHapus.BackColor = Color.IndianRed;
+            buttonHapus.FlatStyle = FlatStyle.Flat;
+            buttonHapus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonHapus.Location = new Point(1179, 507);
+            buttonHapus.Name = "buttonHapus";
+            buttonHapus.Size = new Size(92, 36);
+            buttonHapus.TabIndex = 25;
+            buttonHapus.Text = "Hapus";
+            buttonHapus.UseVisualStyleBackColor = false;
+            buttonHapus.Click += buttonHapus_Click;
+            // 
+            // buttonUpdate
+            // 
+            buttonUpdate.BackColor = SystemColors.ActiveCaption;
+            buttonUpdate.FlatStyle = FlatStyle.Flat;
+            buttonUpdate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonUpdate.Location = new Point(1081, 507);
+            buttonUpdate.Name = "buttonUpdate";
+            buttonUpdate.Size = new Size(92, 36);
+            buttonUpdate.TabIndex = 27;
+            buttonUpdate.Text = "Update";
+            buttonUpdate.UseVisualStyleBackColor = false;
+            buttonUpdate.Click += buttonUpdate_Click;
             // 
             // FormRegistrasi
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1297, 583);
+            Controls.Add(buttonUpdate);
+            Controls.Add(buttonHapus);
+            Controls.Add(labelId);
             Controls.Add(dataGridViewPeserta);
             Controls.Add(groupBoxJK);
             Controls.Add(groupBoxHari);
@@ -351,5 +394,8 @@
         private GroupBox groupBoxHari;
         private GroupBox groupBoxJK;
         private DataGridView dataGridViewPeserta;
+        private Label labelId;
+        private Button buttonHapus;
+        private Button buttonUpdate;
     }
 }
