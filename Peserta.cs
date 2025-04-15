@@ -43,19 +43,13 @@ namespace Registrasi
             string listSkill = "";
             foreach (string valSkill in this.skill)
             {
-                if (listSkill == "")
-                {
-                    listSkill = valSkill;
-                }
-                else
-                {
-                    listSkill += "," + valSkill;
-                }
+                listSkill += "," + valSkill;
             }
 
             int result = 0;
             MySqlConnection connect = new MySqlConnection(conString);
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO peserta (nama,bahasa,hari,jk,skill,waktu) VALUES(@nama,@bahasaPemrograman,@hariKursus,@jenisKelamin,@skill,@waktu)");
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO peserta (id,nama,bahasa,hari,jk,skill,waktu) VALUES(@id,@nama,@bahasaPemrograman,@hariKursus,@jenisKelamin,@skill,@waktu)");
+            cmd.Parameters.AddWithValue("@id", id);
             cmd.Parameters.AddWithValue("@nama", nama);
             cmd.Parameters.AddWithValue("@bahasaPemrograman", bahasaPemrograman);
             cmd.Parameters.AddWithValue("@hariKursus", hariKursus);
@@ -119,18 +113,10 @@ namespace Registrasi
             string listSkill = "";
             foreach (string valSkill in this.skill)
             {
-                if (listSkill == "")
-                {
-                    listSkill = valSkill;
-                }
-                else
-                {
-                    listSkill += ", " + valSkill;
-                }
+                listSkill += "," + valSkill;
             }
 
             int result = 0;
-            MySqlConnection connect = new MySqlConnection(conString);
             MySqlCommand cmd = new MySqlCommand("UPDATE peserta SET nama = @nama, bahasa = @bahasaPemrograman, hari = @hariKursus, jk = @jenisKelamin, skill = @skill, waktu = @waktu  WHERE id = @id");
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Parameters.AddWithValue("@nama", nama);

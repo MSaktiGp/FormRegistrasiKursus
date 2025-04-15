@@ -35,6 +35,7 @@ namespace Registrasi
 
         private void buttonDaftar_Click(object sender, EventArgs e)
         {
+            skill = new List<string>();
             //membuat objek peserta
             id++;
             nama = textBoxNama.Text;
@@ -224,7 +225,7 @@ namespace Registrasi
         private void buttonHapus_Click(object sender, EventArgs e)
         {
             //Menghapus data berdasarkan ID
-            Peserta peserta = new Peserta(id, nama, jenisKelamin, bahasaPemrograman, hariKursus, skill, waktu);
+            Peserta peserta = new Peserta(id, nama, bahasaPemrograman, hariKursus, jenisKelamin, skill, waktu);
             peserta.delete();
             //baca data
             loadData();
@@ -233,7 +234,7 @@ namespace Registrasi
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             //Mengupdate data berdasarkan ID
-            Peserta peserta = new Peserta(id, nama, jenisKelamin, bahasaPemrograman, hariKursus, skill, waktu);
+            Peserta peserta = new Peserta(id, nama, bahasaPemrograman, hariKursus, jenisKelamin, skill, waktu);
             peserta.update();
             //baca data
             loadData();
