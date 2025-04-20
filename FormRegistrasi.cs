@@ -219,7 +219,6 @@ namespace Registrasi
             checkBoxMobile.Checked = false;
             checkBoxWeb.Checked = false;
             listBoxWaktu.ClearSelected();
-
         }
 
         private void buttonHapus_Click(object sender, EventArgs e)
