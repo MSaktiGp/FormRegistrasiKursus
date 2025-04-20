@@ -117,6 +117,7 @@ namespace Registrasi
             }
 
             int result = 0;
+            MySqlConnection connect = new MySqlConnection(conString);
             MySqlCommand cmd = new MySqlCommand("UPDATE peserta SET nama = @nama, bahasa = @bahasaPemrograman, hari = @hariKursus, jk = @jenisKelamin, skill = @skill, waktu = @waktu  WHERE id = @id");
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Parameters.AddWithValue("@nama", nama);

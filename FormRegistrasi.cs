@@ -35,7 +35,6 @@ namespace Registrasi
 
         private void buttonDaftar_Click(object sender, EventArgs e)
         {
-            skill = new List<string>();
             //membuat objek peserta
             id++;
             nama = textBoxNama.Text;
@@ -187,6 +186,7 @@ namespace Registrasi
 
             if (jenisKelamin == "Laki-laki") radioButtonLk.Checked = true;
             else if (jenisKelamin == "Perempuan") radioButtonP.Checked = true;
+
 
             for (int i = 1; i < listSkill.Length; i++)
             {
