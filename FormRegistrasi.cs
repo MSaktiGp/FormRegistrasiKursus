@@ -233,6 +233,7 @@ namespace Registrasi
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             //Mengupdate data berdasarkan ID
+            nama = textBoxNama.Text;
             Peserta peserta = new Peserta(id, nama, bahasaPemrograman, hariKursus, jenisKelamin, skill, waktu);
             peserta.update();
             //baca data
